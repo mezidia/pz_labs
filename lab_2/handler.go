@@ -8,21 +8,18 @@ import (
 	"strings"
 )
 
-// ComputeHandler should be constructed with input io.Reader and output io.Writer.
-// Its Compute() method should read the expression from input and write the computed result to the output.
 type ComputeHandler struct {
-	// TODO: Add necessary fields.
-	in  io.Reader
-	out io.Writer
+	In  io.Reader
+	Out io.Writer
 }
 
 func (ch *ComputeHandler) Compute() error {
-	reader := bufio.NewReader(ch.in)
-	fmt.Fprintln(ch.out, "Polish prefix notation to postfix")
-	fmt.Fprintln(ch.out, "***************************************")
+	reader := bufio.NewReader(ch.In)
+	fmt.Fprintln(ch.Out, "Polish prefix notation to postfix")
+	fmt.Fprintln(ch.Out, "***************************************")
 
 	for {
-		fmt.Fprint(ch.out, "||# ")
+		fmt.Fprint(ch.Out, "||# ")
 
 		text, _ := reader.ReadString('\n')
 		if runtime.GOOS == "windows" {
@@ -32,9 +29,9 @@ func (ch *ComputeHandler) Compute() error {
 		}
 		result, err := PrefixToPostfix(text)
 		if err != nil {
-			fmt.Fprintln(ch.out, "Err converting:", err)
+			fmt.Fprintln(ch.Out, "Err converting:", err)
 		} else {
-			fmt.Fprintln(ch.out, "postfix:", result)
+			fmt.Fprintln(ch.Out, "postfix:", result)
 		}
 
 	}
