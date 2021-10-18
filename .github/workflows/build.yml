@@ -22,7 +22,7 @@ jobs:
       run: cd lab_2 && make 
 
     - name: Test
-      run: cd lab_2 && go mod tidy && make test
+      run: cd lab_2 && go test -v
       
     - name: Clean
       run: cd lab_2 && make clean
