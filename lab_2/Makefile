@@ -4,7 +4,6 @@ clean:
 	rm -rf out
 
 test: *.go
-	go vet ./...
 	go test ./...
 
 out/example: implementation.go cmd/example/main.go
