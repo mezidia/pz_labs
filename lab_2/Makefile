@@ -3,9 +3,8 @@ default: out/example
 clean:
 	rm -rf out
 
-test: *.go
-	go vet ./...
-	go test ./...
+test: 
+	go test -v
 
 out/example: implementation.go cmd/example/main.go
 	mkdir -p out
