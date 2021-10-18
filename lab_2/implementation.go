@@ -16,7 +16,7 @@ func PrefixToPostfix(input string) (string, error) {
 	rExOperator := regexp.MustCompile(`(\+|-|\*|\/)`)
 	rExOperand := regexp.MustCompile(`[0-9]`)
 	st := Stack{}
-	result := make([]string, 0)
+	result := make([]string, 1)
 
 	//main loop
 	for i := l - 1; i >= 0; i-- {
