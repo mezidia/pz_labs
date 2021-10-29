@@ -8,9 +8,9 @@ import (
 )
 
 func TestPrefixToPostfix_CorrectInput(t *testing.T) {
-	res, err := PrefixToPostfix("+ 5 * - 4 2 3")
+	res, err := PrefixToPostfix("+ 5 * - 42 2 3")
 	if assert.Nil(t, err) {
-		assert.Equal(t, "4 2 - 3 * 5 +", res)
+		assert.Equal(t, "42 2 - 3 * 5 +", res)
 	} else {
 		t.Errorf("Unexpected result")
 	}

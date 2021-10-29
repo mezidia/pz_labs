@@ -8,8 +8,12 @@ import (
 
 func PrefixToPostfix(input string) (string, error) {
 	//prep str
-	input = strings.ReplaceAll(input, " ", "")
-	arr := strings.Split(input, "")
+	// input = strings.ReplaceAll(input, " ", "")
+	input = strings.Trim(input, " ")
+	r := regexp.MustCompile("\\s+")
+	input = r.ReplaceAllString(input, " ")
+	arr := strings.Split(input, " ")
+	fmt.Println(arr)
 	l := len(arr)
 
 	//prep stack, result var & regEx
