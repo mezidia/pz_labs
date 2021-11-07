@@ -22,7 +22,7 @@ func TestComputeHandler_CorrectInput(t *testing.T) {
 	out, _ := ioutil.ReadAll(r)
 	os.Stdout = rescueStdout
 	if assert.Nil(t, err) {
-		assert.Equal(t, "postfix: 4 2 - 3 * 5 +\n", string(out[:]))
+		assert.Equal(t, "[+ 5 * - 4 2 3]\npostfix: 4 2 - 3 * 5 +\n", string(out[:]))
 	} else {
 		t.Errorf("Unexpected result")
 	}
