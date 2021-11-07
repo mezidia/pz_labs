@@ -2,18 +2,18 @@ package lab2
 
 import (
 	"bytes"
-	lab2 "github.com/mezidia/pz_labs/tree/main/lab_2"
-	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"os"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestComputeHandler_CorrectInput(t *testing.T) {
 	rescueStdout := os.Stdout
 	r, w, _ := os.Pipe()
 	os.Stdout = w
-	handler := lab2.ComputeHandler{
+	handler := ComputeHandler{
 		In:  bytes.NewBufferString("+ 5 * - 4 2 3"),
 		Out: w,
 	}
@@ -28,7 +28,7 @@ func TestComputeHandler_CorrectInput(t *testing.T) {
 	}
 }
 func TestComputeHandler_BadChar(t *testing.T) {
-	handler := lab2.ComputeHandler{
+	handler := ComputeHandler{
 		In:  bytes.NewBufferString("aaa"),
 		Out: os.Stdout,
 	}
@@ -40,7 +40,7 @@ func TestComputeHandler_BadChar(t *testing.T) {
 	}
 }
 func TestComputeHandler_WrongExpression(t *testing.T) {
-	handler := lab2.ComputeHandler{
+	handler := ComputeHandler{
 		In:  bytes.NewBufferString("1"),
 		Out: os.Stdout,
 	}
