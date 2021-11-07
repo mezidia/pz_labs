@@ -1,7 +1,6 @@
 package lab2
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -80,9 +79,4 @@ func TestPrefixToPostfix_InvExprNoOper1(t *testing.T) {
 	} else {
 		t.Errorf("Unexpected result")
 	}
-}
-
-func ExamplePrefixToPostfix() {
-	res, _ := PrefixToPostfix("+ 2 2")
-	fmt.Println(res)
 }
