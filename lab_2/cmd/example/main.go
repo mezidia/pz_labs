@@ -5,7 +5,6 @@ import (
 	"flag"
 	"fmt"
 	"os"
-
 	lab2 "github.com/mezidia/pz_labs/tree/main/lab_2"
 )
 
