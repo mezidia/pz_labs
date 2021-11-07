@@ -1,18 +1,17 @@
 package lab2
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
-func TestPrefixToPostfix_CorrectInput(t *testing.T) {
-	res, err := PrefixToPostfix("+ 5 * - 42 2 3")
+///
+
+func TestPrefixToPostfix_CorrectInputBigNumbers(t *testing.T) {
+	res, err := PrefixToPostfix("+ 51 * - 43 25 36")
 	if assert.Nil(t, err) {
-		assert.Equal(t, "42 2 - 3 * 5 +", res)
-	} else {
-		t.Errorf("Unexpected result")
+		assert.Equal(t, "43 25 - 36 * 51 +", res)
 	}
 }
 
@@ -30,8 +29,6 @@ func TestPrefixToPostfix_CorrectInputStartSpaces(t *testing.T) {
 	res, err := PrefixToPostfix("      + 5 * - 4 2 3")
 	if assert.Nil(t, err) {
 		assert.Equal(t, "4 2 - 3 * 5 +", res)
-	} else {
-		t.Errorf("Unexpected result")
 	}
 }
 
@@ -39,8 +36,6 @@ func TestPrefixToPostfix_CorrectInputEndSpaces(t *testing.T) {
 	res, err := PrefixToPostfix("+ 5 * - 4 2 3           ")
 	if assert.Nil(t, err) {
 		assert.Equal(t, "4 2 - 3 * 5 +", res)
-	} else {
-		t.Errorf("Unexpected result")
 	}
 }
 
@@ -48,8 +43,6 @@ func TestPrefixToPostfix_CorrectInputInnerSpaces(t *testing.T) {
 	res, err := PrefixToPostfix("+ 5 * -         4 2 3")
 	if assert.Nil(t, err) {
 		assert.Equal(t, "4 2 - 3 * 5 +", res)
-	} else {
-		t.Errorf("Unexpected result")
 	}
 }
 
@@ -62,7 +55,6 @@ func TestPrefixToPostfix_InvExprNoOper(t *testing.T) {
 		t.Errorf("Unexpected result")
 	}
 }
-
 func TestPrefixToPostfixInvExpr2Symb(t *testing.T) {
 	res, err := PrefixToPostfix("-5")
 	if err != nil {
@@ -81,12 +73,4 @@ func TestPrefixToPostfix_InvExprNoOper1(t *testing.T) {
 	} else {
 		t.Errorf("Unexpected result")
 	}
-}
-
-func ExamplePrefixToPostfix() {
-	res, _ := PrefixToPostfix("+ 2 2")
-	fmt.Println(res)
-
-	// Output:
-	// 2 2 +
 }
