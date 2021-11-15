@@ -1,8 +1,8 @@
 package users
 
 import (
-	"lab_3/client/common"
-	"lab_3/client/dto"
+	"github.com/mezidia/pz_labs/lab_3/client/common"
+	"github.com/mezidia/pz_labs/lab_3/client/dto"
 )
 
 //return method registrate user using http method from common

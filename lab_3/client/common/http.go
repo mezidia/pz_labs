@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"encoding/json"
 	"bytes"
-	"lab_3/client/dto"
+	"github.com/mezidia/pz_labs/lab_3/client/dto"
 )
 
 type Client struct {

@@ -8,7 +8,7 @@ import (
 	"os"
 	"os/signal"
 
-	"github.com/mezidia/pz_labs/tree/lab3/lab_3/server/db"
+	"github.com/mezidia/pz_labs/lab_3/server/db"
 )
 
 var httpPortNumber = flag.Int("p", 8081, "HTTP port number")

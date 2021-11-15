@@ -1,4 +1,4 @@
-module github.com/mezidia/pz_labs/tree/lab3/lab_3
+module github.com/mezidia/pz_labs/lab_3
 
 go 1.15
 

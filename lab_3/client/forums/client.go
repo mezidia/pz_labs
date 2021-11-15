@@ -1,7 +1,7 @@
 package forums
 
 import (
-	"lab_3/client/common"
+	"github.com/mezidia/pz_labs/lab_3/client/common"
 )
 
 //return method get forums using http methods from package common

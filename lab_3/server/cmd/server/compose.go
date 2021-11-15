@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/mezidia/pz_labs/tree/lab3/lab_3/server/channels"
+	"github.com/mezidia/pz_labs/lab_3/server/channels"
 )
 
 func ComposeApiServer(port HttpPortNumber) *ChatApiServer {

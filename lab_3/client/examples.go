@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	"lab_3/client/common"
-	"lab_3/client/forums"
-	"lab_3/client/users"
-	"lab_3/client/dto"
+	"github.com/mezidia/pz_labs/lab_3/client/common"
+	"github.com/mezidia/pz_labs/lab_3/client/forums"
+	"github.com/mezidia/pz_labs/lab_3/client/users"
+	"github.com/mezidia/pz_labs/lab_3/client/dto"
 )
 
 const baseURL string = "http://localhost:8081"

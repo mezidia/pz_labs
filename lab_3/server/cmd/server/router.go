@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/mezidia/pz_labs/tree/lab3/lab_3/server/tools"
+	"github.com/mezidia/pz_labs/lab_3/server/tools"
 )
 
 type HttpHandlerFunc http.HandlerFunc
