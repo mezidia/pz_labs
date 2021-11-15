@@ -4,19 +4,20 @@ import (
 	"database/sql"
 	"net/url"
 
-	_ "github.com/lib/pq"
+	_ "github.com/denisenkom/go-mssqldb"
 )
 
 type Connection struct {
-	DbName         string
-	User, Password string
-	Host           string
-	DisableSSL     bool
+	DbName     string
+	User       string
+	Password   string
+	Host       string
+	DisableSSL bool
 }
 
 func (c *Connection) ConnectionURL() string {
 	dbUrl := &url.URL{
-		Scheme: "postgres",
+		Scheme: "sqlserver",
 		Host:   c.Host,
 		User:   url.UserPassword(c.User, c.Password),
 		Path:   c.DbName,
@@ -30,5 +31,5 @@ func (c *Connection) ConnectionURL() string {
 }
 
 func (c *Connection) Open() (*sql.DB, error) {
-	return sql.Open("postgres", c.ConnectionURL())
+	return sql.Open("sqlserver", c.ConnectionURL())
 }

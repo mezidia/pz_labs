@@ -6,8 +6,8 @@ import (
 )
 
 type Channel struct {
-	Id   int64  `json:"id"`
-	Name string `json:"name"`
+	ForumId   int64  `json:"ForumId"`
+	ForumName string `json:"ForumName"`
 }
 
 type Store struct {
@@ -19,17 +19,17 @@ func NewStore(db *sql.DB) *Store {
 }
 
 func (s *Store) ListChannels() ([]*Channel, error) {
-	rows, err := s.Db.Query("SELECT id, name FROM channels LIMIT 200")
+	rows, err := s.Db.Query("SELECT ForumId, ForumName FROM forum")
 	if err != nil {
 		return nil, err
 	}
-
+	fmt.Print(rows)
 	defer rows.Close()
 
 	var res []*Channel
 	for rows.Next() {
 		var c Channel
-		if err := rows.Scan(&c.Id, &c.Name); err != nil {
+		if err := rows.Scan(&c.ForumId, &c.ForumName); err != nil {
 			return nil, err
 		}
 		res = append(res, &c)
