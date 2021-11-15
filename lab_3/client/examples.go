@@ -8,7 +8,7 @@ import (
 	"lab_3/client/dto"
 )
 
-const baseURL string = "http://localhost:8080"
+const baseURL string = "http://localhost:8081"
 
 func main() {
 	client := &common.Client{
