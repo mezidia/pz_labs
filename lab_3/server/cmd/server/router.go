@@ -27,7 +27,6 @@ func (r *Router) rmRoute(route string) {
 
 func (r *Router) handle(rw http.ResponseWriter, req *http.Request) {
 	handler, ok := r.routs[req.RequestURI]
-	fmt.Println(handler)
 	fmt.Println(req.RequestURI)
 	if !ok {
 		tools.WriteJsonBadRequest(rw, "404")

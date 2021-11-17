@@ -4,25 +4,25 @@ import (
 	"log"
 	"os"
 
-	"github.com/mezidia/pz_labs/lab_3/server/channels"
+	"github.com/mezidia/pz_labs/lab_3/server/forums"
 )
 
-func ComposeApiServer(port HttpPortNumber) *ChatApiServer {
-	chatApiServer := &ChatApiServer{
+func ComposeApiServer(port HttpPortNumber) *ApiServer {
+	chatApiServer := &ApiServer{
 		Port:   port,
 		router: ComposeRouter(),
 	}
 	return chatApiServer
 }
 
-func ComposeForumsHandler() channels.HttpHandlerFunc {
+func ComposeForumsHandler() forums.HttpHandlerFunc {
 	db, err := NewDbConnection()
 	if err != nil {
 		log.Fatal(err)
 		os.Exit(1)
 	}
-	store := channels.NewStore(db)
-	httpHandlerFunc := channels.HttpHandler(store)
+	store := forums.NewStore(db)
+	httpHandlerFunc := forums.HttpHandler(store)
 	return httpHandlerFunc
 }
 

@@ -1,4 +1,4 @@
-package channels
+package forums
 
 import (
 	"encoding/json"
@@ -15,23 +15,23 @@ type HttpHandlerFunc http.HandlerFunc
 func HttpHandler(store *Store) HttpHandlerFunc {
 	return func(rw http.ResponseWriter, r *http.Request) {
 		if r.Method == "GET" {
-			handleListChannels(store, rw)
+			handleListForums(store, rw)
 		} else if r.Method == "POST" {
-			handleChannelCreate(r, rw, store)
+			handleForumCreate(r, rw, store)
 		} else {
 			rw.WriteHeader(http.StatusMethodNotAllowed)
 		}
 	}
 }
 
-func handleChannelCreate(r *http.Request, rw http.ResponseWriter, store *Store) {
-	var c Channel
+func handleForumCreate(r *http.Request, rw http.ResponseWriter, store *Store) {
+	var c Forum
 	if err := json.NewDecoder(r.Body).Decode(&c); err != nil {
 		log.Printf("Error decoding channel input: %s", err)
 		tools.WriteJsonBadRequest(rw, "bad JSON payload")
 		return
 	}
-	err := store.CreateChannel(c.Name)
+	err := store.CreateForum(c.ForumName)
 	if err == nil {
 		tools.WriteJsonOk(rw, &c)
 	} else {
@@ -40,8 +40,8 @@ func handleChannelCreate(r *http.Request, rw http.ResponseWriter, store *Store) 
 	}
 }
 
-func handleListChannels(store *Store, rw http.ResponseWriter) {
-	res, err := store.ListChannels()
+func handleListForums(store *Store, rw http.ResponseWriter) {
+	res, err := store.ListForums()
 	if err != nil {
 		log.Printf("Error making query to the db: %s", err)
 		tools.WriteJsonInternalError(rw)

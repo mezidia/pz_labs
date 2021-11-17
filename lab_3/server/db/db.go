@@ -20,7 +20,6 @@ func (c *Connection) ConnectionURL() string {
 		Scheme: "sqlserver",
 		Host:   c.Host,
 		User:   url.UserPassword(c.User, c.Password),
-		Path:   c.DbName,
 	}
 	if c.DisableSSL {
 		dbUrl.RawQuery = url.Values{
