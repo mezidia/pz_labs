@@ -1,4 +1,4 @@
-package forums
+package users
 
 import (
 	"encoding/json"
@@ -15,33 +15,33 @@ type HttpHandlerFunc http.HandlerFunc
 func HttpHandler(store *Store) HttpHandlerFunc {
 	return func(rw http.ResponseWriter, r *http.Request) {
 		if r.Method == "GET" {
-			handleListForums(store, rw)
+			handleListUsers(store, rw)
 		} else if r.Method == "POST" {
-			handleForumCreate(r, rw, store)
+			handleUserCreate(r, rw, store)
 		} else {
 			rw.WriteHeader(http.StatusMethodNotAllowed)
 		}
 	}
 }
 
-func handleForumCreate(r *http.Request, rw http.ResponseWriter, store *Store) {
-	var f Forum
-	if err := json.NewDecoder(r.Body).Decode(&f); err != nil {
+func handleUserCreate(r *http.Request, rw http.ResponseWriter, store *Store) {
+	var u User
+	if err := json.NewDecoder(r.Body).Decode(&u); err != nil {
 		log.Printf("Error decoding channel input: %s", err)
 		tools.WriteJsonBadRequest(rw, "bad JSON payload")
 		return
 	}
-	err := store.CreateForum(f.ForumName)
+	err := store.CreateUser(u.UserName)
 	if err == nil {
-		tools.WriteJsonOk(rw, &f)
+		tools.WriteJsonOk(rw, &u)
 	} else {
 		log.Printf("Error inserting record: %s", err)
 		tools.WriteJsonInternalError(rw)
 	}
 }
 
-func handleListForums(store *Store, rw http.ResponseWriter) {
-	res, err := store.ListForums()
+func handleListUsers(store *Store, rw http.ResponseWriter) {
+	res, err := store.ListUsers()
 	if err != nil {
 		log.Printf("Error making query to the db: %s", err)
 		tools.WriteJsonInternalError(rw)
