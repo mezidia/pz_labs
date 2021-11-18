@@ -1,4 +1,4 @@
-package Users
+package users
 
 import (
 	"database/sql"
@@ -8,6 +8,9 @@ import (
 type User struct {
 	UserId   int    `json:"UserId"`
 	UserName string `json:"UserName"`
+	UserType int    `json:"UserType"`
+	UserMail string `json:"UserMail"`
+	Password string `json:"Password"`
 }
 
 type Store struct {
@@ -19,7 +22,7 @@ func NewStore(db *sql.DB) *Store {
 }
 
 func (s *Store) ListUsers() ([]*User, error) {
-	rows, err := s.Db.Query("SELECT UserId, UserName FROM User")
+	rows, err := s.Db.Query("SELECT UserId, [UserName], [UserType], [UserMail] FROM [User]")
 	if err != nil {
 		return nil, err
 	}
@@ -28,7 +31,7 @@ func (s *Store) ListUsers() ([]*User, error) {
 	var res []*User
 	for rows.Next() {
 		var c User
-		if err := rows.Scan(&c.UserId, &c.UserName); err != nil {
+		if err := rows.Scan(&c.UserId, &c.UserName, &c.UserType, &c.UserMail); err != nil {
 			return nil, err
 		}
 		res = append(res, &c)
@@ -39,10 +42,10 @@ func (s *Store) ListUsers() ([]*User, error) {
 	return res, nil
 }
 
-func (s *Store) CreateUser(name string) error {
+func (s *Store) CreateUser(name string, utype int, mail string, password string) error {
 	if len(name) < 0 {
 		return fmt.Errorf("channel name is not provided")
 	}
-	_, err := s.Db.Exec("INSERT INTO User (UserName) VALUES ($1)", name)
+	_, err := s.Db.Exec("INSERT INTO [User] (UserName, UserType, UserMail, Password, IsDeleted) VALUES ($1, $2, $3, $4, 0)", name, utype, mail, password)
 	return err
 }
