@@ -26,11 +26,15 @@ func main() {
 	fmt.Println(forums)
 
 	//scenario registrate user
+	interests := make([]string, 3)
+	interests[0] = "literature"
+  interests[1] = "politics"
+	interests[2] = "cars"
 	user := &dto.User{
 		Name: "Ivan Franko",
 		Mail: "ivan.franko@gmail.com",
 		Password: "Djedjalyk",
-		Interests: "literature",
+		Interests: interests,
 	}
 	fmt.Println("=== Scenario 2 ===")
 	fmt.Println("Registrate user: ")
