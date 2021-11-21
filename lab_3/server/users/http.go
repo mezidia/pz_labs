@@ -27,11 +27,11 @@ func HttpHandler(store *Store) HttpHandlerFunc {
 func handleUserCreate(r *http.Request, rw http.ResponseWriter, store *Store) {
 	var u User
 	if err := json.NewDecoder(r.Body).Decode(&u); err != nil {
-		log.Printf("Error decoding channel input: %s", err)
+		log.Printf("Error decoding user input: %s", err)
 		tools.WriteJsonBadRequest(rw, "bad JSON payload")
 		return
 	}
-	err := store.CreateUser(u.UserName, u.UserType, u.UserMail, u.Password)
+	err := store.CreateUser(u.UserName, u.UserType, u.UserMail, u.Password, u.Interests)
 	if err == nil {
 		tools.WriteJsonOk(rw, &u)
 	} else {
