@@ -6,11 +6,12 @@ import (
 )
 
 type User struct {
-	UserId   int    `json:"UserId"`
-	UserName string `json:"UserName"`
-	UserType int    `json:"UserType"`
-	UserMail string `json:"UserMail"`
-	Password string `json:"Password"`
+	UserId    int      `json:"UserId"`
+	UserName  string   `json:"UserName"`
+	UserType  int      `json:"UserType"`
+	UserMail  string   `json:"UserMail"`
+	Password  string   `json:"Password"`
+	Interests []string `json:"Interests"`
 }
 
 type Store struct {
@@ -42,10 +43,16 @@ func (s *Store) ListUsers() ([]*User, error) {
 	return res, nil
 }
 
-func (s *Store) CreateUser(name string, utype int, mail string, password string) error {
+func (s *Store) CreateUser(name string, utype int, mail string, password string, interests []string) error {
 	if len(name) < 0 {
 		return fmt.Errorf("channel name is not provided")
 	}
-	_, err := s.Db.Exec("INSERT INTO [User] (UserName, UserType, UserMail, Password, IsDeleted) VALUES ($1, $2, $3, $4, 0)", name, utype, mail, password)
+	fmt.Println(interests)
+	var xmlString = "<ITEMS>"
+	for _, s := range interests {
+		xmlString = xmlString + "<ITEM Interest=\"" + s + "\" />"
+	}
+	xmlString = xmlString + "</ITEMS>"
+	_, err := s.Db.Query("EXEC [InsertUser] @UserType=0, @UserName='" + name + "', @UserMail='" + mail + "', @Password='" + password + "', @Interests='" + xmlString + "'")
 	return err
 }
