@@ -38,6 +38,17 @@ func ComposeUsersHandler() users.HttpHandlerFunc {
 	return httpHandlerFunc
 }
 
+func ComposeInterestsHandler() forums.HttpHandlerFunc {
+	db, err := NewDbConnection()
+	if err != nil {
+		log.Fatal(err)
+		os.Exit(1)
+	}
+	store := forums.NewStore(db)
+	httpHandlerFunc := forums.HttpHandler(store)
+	return httpHandlerFunc
+}
+
 // ComposeRouter will create an instance of Router according to providers defined in this file.
 func ComposeRouter() *Router {
 	router := &Router{ROUTER_CONFIG}
