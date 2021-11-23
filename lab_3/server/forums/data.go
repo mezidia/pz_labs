@@ -6,8 +6,10 @@ import (
 )
 
 type Forum struct {
-	ForumId   int    `json:"ForumId"`
-	ForumName string `json:"ForumName"`
+	ForumId      int    `json:"ForumId"`
+	ForumName    string `json:"ForumName"`
+	InterestName string `json:"InterestName"`
+	UserName     string `json:"UserName"`
 }
 
 type Store struct {
@@ -19,7 +21,7 @@ func NewStore(db *sql.DB) *Store {
 }
 
 func (s *Store) ListForums() ([]*Forum, error) {
-	rows, err := s.Db.Query("SELECT ForumId, ForumName FROM forum")
+	rows, err := s.Db.Query("SELECT DISTINCT  Forum.ForumId, Forum.ForumName, Theme.ThemeName, [User].UserName FROM  Forum INNER JOIN	ForumUser ON Forum.ForumID = ForumUser.ForumID INNER JOIN [User] ON ForumUser.UserID = [User].UserID INNER JOIN ThemeForum ON Forum.ForumID = ThemeForum.ForumID INNER JOIN Theme ON ThemeForum.ThemeID = Theme.ThemeID")
 	if err != nil {
 		return nil, err
 	}
@@ -27,11 +29,11 @@ func (s *Store) ListForums() ([]*Forum, error) {
 
 	var res []*Forum
 	for rows.Next() {
-		var c Forum
-		if err := rows.Scan(&c.ForumId, &c.ForumName); err != nil {
+		var f Forum
+		if err := rows.Scan(&f.ForumId, &f.ForumName, &f.InterestName, &f.UserName); err != nil {
 			return nil, err
 		}
-		res = append(res, &c)
+		res = append(res, &f)
 	}
 	if res == nil {
 		res = make([]*Forum, 0)

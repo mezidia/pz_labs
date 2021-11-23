@@ -3,11 +3,14 @@ package interests
 import (
 	"database/sql"
 	"fmt"
+	"strconv"
 )
 
 type Interest struct {
 	InterestId   int    `json:"InterestId"`
 	InterestName string `json:"InterestName"`
+	ForumName    string `json:"ForumName"`
+	ForumId      int    `json:"ForumId"`
 }
 
 type Store struct {
@@ -19,7 +22,7 @@ func NewStore(db *sql.DB) *Store {
 }
 
 func (s *Store) ListInterests() ([]*Interest, error) {
-	rows, err := s.Db.Query("SELECT ThemeId, ThemeName FROM [Theme]")
+	rows, err := s.Db.Query("SELECT Theme.ThemeID, Theme.ThemeName, Forum.ForumName, ThemeForum.ForumID  FROM Forum INNER JOIN ThemeForum ON Forum.ForumID = ThemeForum.ForumID INNER JOIN Theme ON ThemeForum.ThemeID = Theme.ThemeID")
 	if err != nil {
 		return nil, err
 	}
@@ -28,7 +31,7 @@ func (s *Store) ListInterests() ([]*Interest, error) {
 	var res []*Interest
 	for rows.Next() {
 		var c Interest
-		if err := rows.Scan(&c.InterestId, &c.InterestName); err != nil {
+		if err := rows.Scan(&c.InterestId, &c.InterestName, &c.ForumName, &c.ForumId); err != nil {
 			return nil, err
 		}
 		res = append(res, &c)
@@ -39,11 +42,11 @@ func (s *Store) ListInterests() ([]*Interest, error) {
 	return res, nil
 }
 
-func (s *Store) CreateInterest(name string) error {
-	if len(name) < 0 {
-		return fmt.Errorf("interest name is not provided")
+func (s *Store) CreateInterest(name string, forumId int) error {
+	if len(name) < 0 || forumId < 1 {
+		return fmt.Errorf("interest name or forum ID is not provided")
 	}
 	fmt.Println(name)
-	_, err := s.Db.Exec("INSERT INTO [Theme] (ThemeName) VALUES ('" + name + "')")
+	_, err := s.Db.Query("EXEC [InsertInterest] @InterestName='" + name + "', @ForumId=" + strconv.Itoa(forumId))
 	return err
 }

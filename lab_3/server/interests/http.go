@@ -27,11 +27,11 @@ func HttpHandler(store *Store) HttpHandlerFunc {
 func handleInterestCreate(r *http.Request, rw http.ResponseWriter, store *Store) {
 	var i Interest
 	if err := json.NewDecoder(r.Body).Decode(&i); err != nil {
-		log.Printf("Error decoding channel input: %s", err)
+		log.Printf("Error decoding interest input: %s", err)
 		tools.WriteJsonBadRequest(rw, "bad JSON payload")
 		return
 	}
-	err := store.CreateInterest(i.InterestName)
+	err := store.CreateInterest(i.InterestName, i.ForumId)
 	if err == nil {
 		tools.WriteJsonOk(rw, &i)
 	} else {
