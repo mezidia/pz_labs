@@ -43,6 +43,6 @@ func (s *Store) CreateForum(name string) error {
 	if len(name) < 0 {
 		return fmt.Errorf("channel name is not provided")
 	}
-	_, err := s.Db.Exec("INSERT INTO forum (ForumName) VALUES ($1)", name)
+	_, err := s.Db.Exec("INSERT INTO forum (ForumName) VALUES ('" + name + "')")
 	return err
 }

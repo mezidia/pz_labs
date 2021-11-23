@@ -1,13 +1,13 @@
-package forums
+package interests
 
 import (
 	"database/sql"
 	"fmt"
 )
 
-type Forum struct {
-	ForumId   int    `json:"ForumId"`
-	ForumName string `json:"ForumName"`
+type Interest struct {
+	InterestId   int    `json:"InterestId"`
+	InterestName string `json:"InterestName"`
 }
 
 type Store struct {
@@ -18,31 +18,32 @@ func NewStore(db *sql.DB) *Store {
 	return &Store{Db: db}
 }
 
-func (s *Store) ListForums() ([]*Forum, error) {
-	rows, err := s.Db.Query("SELECT ForumId, ForumName FROM forum")
+func (s *Store) ListInterests() ([]*Interest, error) {
+	rows, err := s.Db.Query("SELECT ThemeId, ThemeName FROM [Theme]")
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
 
-	var res []*Forum
+	var res []*Interest
 	for rows.Next() {
-		var c Forum
-		if err := rows.Scan(&c.ForumId, &c.ForumName); err != nil {
+		var c Interest
+		if err := rows.Scan(&c.InterestId, &c.InterestName); err != nil {
 			return nil, err
 		}
 		res = append(res, &c)
 	}
 	if res == nil {
-		res = make([]*Forum, 0)
+		res = make([]*Interest, 0)
 	}
 	return res, nil
 }
 
-func (s *Store) CreateForum(name string) error {
+func (s *Store) CreateInterest(name string) error {
 	if len(name) < 0 {
-		return fmt.Errorf("channel name is not provided")
+		return fmt.Errorf("interest name is not provided")
 	}
-	_, err := s.Db.Exec("INSERT INTO forum (ForumName) VALUES ($1)", name)
+	fmt.Println(name)
+	_, err := s.Db.Exec("INSERT INTO [Theme] (ThemeName) VALUES ('" + name + "')")
 	return err
 }

@@ -45,7 +45,7 @@ func (s *Store) ListUsers() ([]*User, error) {
 
 func (s *Store) CreateUser(name string, utype int, mail string, password string, interests []string) error {
 	if len(name) < 0 {
-		return fmt.Errorf("channel name is not provided")
+		return fmt.Errorf("user name is not provided")
 	}
 	fmt.Println(interests)
 	var xmlString = "<ITEMS>"
