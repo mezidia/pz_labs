@@ -44,7 +44,7 @@ func (s *Store) ListUsers() ([]*User, error) {
 }
 
 func (s *Store) CreateUser(name string, utype int, mail string, password string, interests []string) error {
-	if len(name) < 0 {
+	if len(name) < 1 {
 		return fmt.Errorf("user name is not provided")
 	}
 	fmt.Println(interests)
