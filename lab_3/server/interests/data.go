@@ -43,7 +43,7 @@ func (s *Store) ListInterests() ([]*Interest, error) {
 }
 
 func (s *Store) CreateInterest(name string, forumId int) error {
-	if len(name) < 0 || forumId < 1 {
+	if len(name) < 1 || forumId < 1 {
 		return fmt.Errorf("interest name or forum ID is not provided")
 	}
 	fmt.Println(name)
