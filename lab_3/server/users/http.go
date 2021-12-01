@@ -31,6 +31,10 @@ func handleUserCreate(r *http.Request, rw http.ResponseWriter, store *Store) {
 		tools.WriteJsonBadRequest(rw, "bad JSON payload")
 		return
 	}
+	if len(u.UserName) < 1 {
+		tools.WriteJsonBadRequest(rw, "user name is not provided")
+		return
+	}
 	err := store.CreateUser(u.UserName, u.UserType, u.UserMail, u.Password, u.Interests)
 	if err == nil {
 		tools.WriteJsonOk(rw, &u)

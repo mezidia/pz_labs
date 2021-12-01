@@ -31,6 +31,10 @@ func handleInterestCreate(r *http.Request, rw http.ResponseWriter, store *Store)
 		tools.WriteJsonBadRequest(rw, "bad JSON payload")
 		return
 	}
+	if len(i.InterestName) < 1 || i.ForumId < 1 {
+		tools.WriteJsonBadRequest(rw, "interest name or forum ID is not provided")
+		return
+	}
 	err := store.CreateInterest(i.InterestName, i.ForumId)
 	if err == nil {
 		tools.WriteJsonOk(rw, &i)

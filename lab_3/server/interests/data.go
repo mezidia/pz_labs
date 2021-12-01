@@ -2,7 +2,6 @@ package interests
 
 import (
 	"database/sql"
-	"fmt"
 	"strconv"
 )
 
@@ -43,10 +42,6 @@ func (s *Store) ListInterests() ([]*Interest, error) {
 }
 
 func (s *Store) CreateInterest(name string, forumId int) error {
-	if len(name) < 1 || forumId < 1 {
-		return fmt.Errorf("interest name or forum ID is not provided")
-	}
-	fmt.Println(name)
 	_, err := s.Db.Query("EXEC [InsertInterest] @InterestName='" + name + "', @ForumId=" + strconv.Itoa(forumId))
 	return err
 }

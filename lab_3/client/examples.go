@@ -30,11 +30,11 @@ func main() {
 	interests := make([]string, 3)
 	interests[0] = "literature"
 	interests[1] = "politics"
-	interests[2] = "cars"
+	interests[2] = "War"
 	user := &dto.User{
-		UserName:      "Ivan Franko",
-		UserType: 0,
-		UserMail:      "ivan.franko@gmail.com",
+		UserName:  "Ivan Franko",
+		UserType:  0,
+		UserMail:  "ivan.franko@gmail.com",
 		Password:  "Djedjalyk",
 		Interests: interests,
 	}

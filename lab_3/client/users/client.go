@@ -7,5 +7,5 @@ import (
 
 //return method registrate user using http method from common
 func RegistrateUser(client *common.Client, userInfo *dto.User) (*dto.RegistrateUserResponse, error) {
-	return client.Post("/users", userInfo)
+	return client.Post("/users/registrateUser", userInfo)
 }
