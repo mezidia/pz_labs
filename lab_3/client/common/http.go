@@ -13,7 +13,7 @@ type Client struct {
 }
 
 // composing get request
-func (c *Client) Get(endpoint string) ([]dto.Forum, error) {
+func (c *Client) Get(endpoint string) ([]dto.ForumsResponse, error) {
 	url := fmt.Sprintf("%s%s", c.BaseURL, endpoint)
 
 	req, err := http.NewRequest("GET", url, nil)
@@ -28,12 +28,8 @@ func (c *Client) Get(endpoint string) ([]dto.Forum, error) {
 	}
 	defer res.Body.Close()
 
-	if 200 != res.StatusCode {
-		return nil, fmt.Errorf("Status code not equal to 200")
-	}
-
 	//decode answer if no error
-	body := []dto.Forum{}
+	body := []dto.ForumsResponse{}
 	err = json.NewDecoder(res.Body).Decode(&body)
 
 	if err != nil {
@@ -43,32 +39,27 @@ func (c *Client) Get(endpoint string) ([]dto.Forum, error) {
 }
 
 // composing post request
-func (c *Client) Post(endpoint string, userInfo *dto.User) (*dto.RegistrateUserResponse, error) {
+func (c *Client) Post(endpoint string, userInfo *dto.User) (int, error) {
 	url := fmt.Sprintf("%s%s", c.BaseURL, endpoint)
 	j, err := json.Marshal(userInfo)
 
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(j))
 	if err != nil {
-		return nil, err
+		return 1, err
 	}
 
 	client := &http.Client{}
 	res, err := client.Do(req)
 	if err != nil {
-		return nil, err
+		return 1, err
 	}
 	defer res.Body.Close()
 
-	if 200 != res.StatusCode {
-		return nil, fmt.Errorf("Status code not equal to 200")
-	}
-
 	//decode answer if no error
-	body := &dto.RegistrateUserResponse{};
-	err = json.NewDecoder(res.Body).Decode(&body)
+	statusCode := res.StatusCode;
 
 	if err != nil {
-		return nil, err
+		return 1, err
 	}
-	return body, nil
+	return statusCode, nil
 }

@@ -6,6 +6,6 @@ import (
 )
 
 //return method get forums using http methods from package common
-func GetForums(client *common.Client) ([]dto.Forum, error) {
+func GetForums(client *common.Client) ([]dto.ForumsResponse, error) {
 	return client.Get("/forums")
 }
