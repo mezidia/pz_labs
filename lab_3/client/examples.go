@@ -28,25 +28,14 @@ func main() {
 
 	//scenario registrate user
 	interests := make([]string, 3)
-<<<<<<< HEAD
-	interests[0] = "literature"
-	interests[1] = "politics"
-	interests[2] = "War"
-	user := &dto.User{
-		UserName:  "Ivan Franko",
-		UserType:  0,
-		UserMail:  "ivan.franko@gmail.com",
-		Password:  "Djedjalyk",
-=======
 	interests[0] = "Yagnyata"
 	interests[1] = "flowers1"
 	interests[2] = "War"
 	user := &dto.User{
-		UserName:      "Taras Shevchenko",
-		UserType: 0,
-		UserMail:      "taras.shevchenko@gmail.com",
+		UserName:  "Taras Shevchenko",
+		UserType:  0,
+		UserMail:  "taras.shevchenko@gmail.com",
 		Password:  "Slava Ukrayini",
->>>>>>> 71fdbd32bcccaad00ce7bdd3e0318923ee770cae
 		Interests: interests,
 	}
 	fmt.Println("=== Scenario 2 ===")
