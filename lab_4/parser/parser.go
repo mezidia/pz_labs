@@ -7,8 +7,8 @@ import (
 	// "strings"
 )
 
-func main() {
-	input, err := os.Open("./input")
+func Parse(file string) {
+	input, err := os.Open(file)
 	if err != nil {
 		fmt.Print(err)
 	}
@@ -16,12 +16,16 @@ func main() {
 	scanner := bufio.NewScanner(input)
 	for scanner.Scan() {
 		fmt.Println(scanner.Text())
-		cmd := parse(commandLine)
-		// eventLoop.Post(cmd) 
+		// cmd := parse(commandLine)
+		
 	}
 	if err := scanner.Err(); err != nil {
 		fmt.Fprintln(os.Stderr, "reading standard input:", err)
 	}
+
+	// cmd := &printCommand{
+	// 	arg: "Hello",
+	// }
 
 
 	// // Set the split function for the scanning operation.
