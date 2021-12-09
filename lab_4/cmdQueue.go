@@ -14,3 +14,7 @@ func (q *cmdQueue) pull() Command {
 	q.c = q.c[1:]
 	return res
 }
+
+func (q *cmdQueue) size() int {
+	return len(q.c)
+}
