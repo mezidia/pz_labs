@@ -1,39 +1,23 @@
 package lab4
 
-type Command interface {
-	Exec(handler Handler)
-}
-
-type Handler interface {
-	Post(cmd Command)
-}
-
 type Loop struct {
-}
-
-type cmdQueue struct {
-}
-
-func (q *cmdQueue) push(cmd Command) {
-
-}
-
-func (q *cmdQueue) pull(cmd Command) Command {
-	return nil
+	queue *cmdQueue
 }
 
 func (l *Loop) Post(cmd Command) {
-	cmd.Exec(l)
+	l.queue.push(cmd)
 }
 
 func (l *Loop) Start() {
-
+	l.queue = &cmdQueue{}
+	go func() {
+		for {
+			cmd := l.queue.pull()
+			cmd.Exec(l)
+		}
+	}()
 }
 
 func (l *Loop) AwaitStop() {
-
-}
-
-func main() {
 
 }
