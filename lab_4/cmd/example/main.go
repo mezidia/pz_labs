@@ -1,16 +1,24 @@
 package main
 
 import (
+	"fmt"
 	lab4 "github.com/mezidia/pz_labs/tree/lab4/lab_4"
+	"github.com/mezidia/pz_labs/tree/lab4/lab_4/parser"
+	"github.com/mezidia/pz_labs/tree/lab4/lab_4/engine"
 )
 
 func main() {
+	cmds, err := parser.Parse("input")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	
 	l := new(lab4.Loop)
 	l.Start()
-	l.Post(&lab4.PrintCommand{Arg: "asd"})
-	l.Post(&lab4.PrintCommand{Arg: "asd1"})
-	l.Post(&lab4.PrintCommand{Arg: "asd2"})
-	l.Post(&lab4.PrintCommand{Arg: "asd3"})
-	l.AwaitFinish()
-	l.Post(&lab4.PrintCommand{Arg: "error"})
+	for _, cmd := range(cmds) {
+		l.Post(cmd)
+	}
+	l.AwaitFinish()	
+	l.Post(&engine.PrintCommand{Arg: "Should end!"})
 }

@@ -1,10 +1,10 @@
 package engine
 
 type Command interface { 
-  Execute() 
+  Execute(handler Handler) 
 } 
 
 type Handler interface { 
-  Post() 
+  Post(cmd Command) 
 }
 

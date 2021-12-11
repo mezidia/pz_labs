@@ -1,5 +1,9 @@
 package lab4
 
+import (
+	"github.com/mezidia/pz_labs/tree/lab4/lab_4/engine"
+)
+
 type Loop struct {
 	queue     *cmdQueue
 	quit      chan bool
@@ -7,7 +11,7 @@ type Loop struct {
 	isPaused  bool
 }
 
-func (l *Loop) Post(cmd Command) {
+func (l *Loop) Post(cmd engine.Command) {
 	l.queue.push(cmd)
 	if l.isPaused && !l.isStopped {
 		l.startRoutine()
@@ -20,7 +24,7 @@ func (l *Loop) startRoutine() {
 		for {
 			if l.queue.size() > 0 {
 				cmd := l.queue.pull()
-				cmd.Exec(l)
+				cmd.Execute(l)
 			} else if l.isStopped {
 				l.quit <- true
 				return
