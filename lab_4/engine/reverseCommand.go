@@ -9,7 +9,6 @@ func (p *ReverseCommand) Execute(loop Handler) {
 	for i, j := 0, len(runes)-1; i < j; i, j = i+1, j-1 {
 		runes[i], runes[j] = runes[j], runes[i]
 	}
-	var print PrintCommand
-	print.Arg = string(runes)
-	print.Execute(loop)
+	print := PrintCommand{Arg: string(runes)}
+	loop.Post(&print)
 }
