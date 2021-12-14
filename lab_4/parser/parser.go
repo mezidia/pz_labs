@@ -8,49 +8,66 @@ import (
 	"github.com/mezidia/pz_labs/tree/lab4/lab_4/engine"
 )
 
-func Parse(file string) ([]engine.Command, error) {
+func Parse(file string) []engine.Command {
+	var cmds []engine.Command
+
 	input, err := os.Open(file)
 	if err != nil {
-		fmt.Print(err)
+		err := fmt.Sprintf("INTERNAL ERROR: %s", err)
+		cmd := &engine.PrintCommand{
+			Arg: err,
+		}
+		cmds = append(cmds, cmd)
+		return cmds
 	}
 
-	var cmds []engine.Command
 	scanner := bufio.NewScanner(input)
 	for scanner.Scan() {
 		if len(strings.Trim(scanner.Text(), " ")) == 0 {
 			continue
 		}
 		commands := strings.Split(scanner.Text(),"\n")
+		var cmd engine.Command
 		for _, command := range commands{
 			split := strings.Fields(command)
 			if split[0] == "print" {
 				if len(split) != 2 {
-					err := fmt.Errorf("Too many arguments")
-					return nil, err
+					err := fmt.Sprintf("SYNTAX ERROR on line *%s*", command)
+					cmd = &engine.PrintCommand{
+						Arg: err,
+					}
+				} else {
+					cmd = &engine.PrintCommand{
+						Arg: split[1],
+					}
 				}
-				cmd := &engine.PrintCommand{
-					Arg: split[1],
-				}
-				cmds = append(cmds, cmd)
 			} else if split[0] == "reverse" {
 				if len(split) != 2 {
-					err := fmt.Errorf("Too many arguments")
-					return nil, err
+					err := fmt.Sprintf("SYNTAX ERROR on line *%s*", command)
+					cmd = &engine.PrintCommand{
+						Arg: err,
+					}
+				} else {
+					cmd = &engine.ReverseCommand{
+						Arg: split[1],
+					}
 				}
-				cmd := &engine.ReverseCommand{
-					Arg: split[1],
-				}
-				cmds = append(cmds, cmd)
 			} else {
-				err := fmt.Errorf("Command %s does not exist", split[0])
-				return nil, err
+				err := fmt.Sprintf("Command *%s* does not exist", split[0])
+				cmd = &engine.PrintCommand{
+					Arg: err,
+				}
 			}
+			cmds = append(cmds, cmd)
 		}
 	}
 
 	if err := scanner.Err(); err != nil {
-		fmt.Fprintln(os.Stderr, "reading standard input:", err)
-		return nil, err
+		err := fmt.Sprintf("INTERNAL ERROR: Reading standard input: %s", err)
+		cmd := &engine.PrintCommand{
+			Arg: err,
+		}
+		cmds = append(cmds, cmd)
 	}
-	return cmds, nil
+	return cmds
 }

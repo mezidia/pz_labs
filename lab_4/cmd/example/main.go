@@ -1,18 +1,13 @@
 package main
 
 import (
-	"fmt"
 	lab4 "github.com/mezidia/pz_labs/tree/lab4/lab_4"
 	"github.com/mezidia/pz_labs/tree/lab4/lab_4/parser"
 	"github.com/mezidia/pz_labs/tree/lab4/lab_4/engine"
 )
 
 func main() {
-	cmds, err := parser.Parse("input")
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+	cmds := parser.Parse("input")
 	
 	l := new(lab4.Loop)
 	l.Start()
