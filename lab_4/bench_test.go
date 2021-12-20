@@ -10,7 +10,7 @@ import (
 
 var cmds []engine.Command
 
-func BenchmarParser(b *testing.B) {
+func BenchmarkParser(b *testing.B) {
 	l := 0
 	for k := 0; k < 20; k++ {
 		l += 2000
