@@ -10,10 +10,10 @@ import (
 
 var cmds []engine.Command
 
-func BenchmarkEventLoop(b *testing.B) {
+func BenchmarParser(b *testing.B) {
 	l := 0
 	for k := 0; k < 20; k++ {
-		l += 1000
+		l += 2000
 		f, _ := os.Create("test.txt")
 		for j := 0; j < l; j++ {
 			f.WriteString("print тутВсеОкВиводьМене\nreverse FaineMisto\n")
